@@ -12,16 +12,21 @@ import { MahasiswaModule } from './mahasiswa/mahasiswa.module';
 import { ConfigModule } from '@nestjs/config';
 import { ApiModule } from './api/api.module';
 import dbConfig from './config/db.config';
+import { MyloggerModule } from './mylogger/mylogger.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load:[dbConfig]
+      load: [dbConfig],
     }),
-    UserModule, 
-    SiswaModule, 
-    MahasiswaModule, ApiModule
+    UserModule,
+    SiswaModule,
+    MahasiswaModule,
+    ApiModule,
+    MyloggerModule.init(
+      'https://dffe70df37f43589f730dc88815b91c4@o4507559168704512.ingest.us.sentry.io/4507559172898816',
+    ),
   ],
   controllers: [AppController],
   providers: [
@@ -32,12 +37,12 @@ import dbConfig from './config/db.config';
     // },
     {
       provide: APP_INTERCEPTOR,
-      useClass: TransformResponseInterceptor
-    }
+      useClass: TransformResponseInterceptor,
+    },
   ],
 })
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes(UserController)
+    consumer.apply(LoggerMiddleware).forRoutes(UserController);
   }
 }

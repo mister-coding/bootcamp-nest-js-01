@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -9,6 +9,7 @@ export class AppController {
 
   @Get()
   getHello() {
+    new Logger(AppController.name).error("Error Testing Nest JS HAHAHA","Error karena ada sesuatu yang tidak diketahui")
     return {
       status: true,
       message: "Hello"
